@@ -14,7 +14,9 @@ A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.
 
     1. foreman start
     
-    2. cd CPSC449-project3/
+    2. Don't do this step before "foreman start"
+    
+       cd CPSC449-project3/
     
        ./bin/init.sh
 
