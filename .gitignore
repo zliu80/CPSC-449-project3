@@ -1,4 +1,9 @@
 **/__pycache__
 var/*
-!var/.gitkeep
+!var/primary/data/.gitkeep
+!var/primary/mount/.gitkeep
+!var/secondary/data/.gitkeep
+!var/secondary/data/.gitkeep
+!var/secondary2/data/.gitkeep
+!var/secondary2/data/.gitkeep
 
