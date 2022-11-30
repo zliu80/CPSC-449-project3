@@ -1,0 +1,6 @@
+[DATABASES]
+URL='sqlite+aiosqlite:///var/userdb'
+DB_PATH = '///var/userdb'
+[GAME]
+MAX_GUESS = 6
+VALID_WORD_LENGTH = 5
