@@ -8,6 +8,8 @@
     
     Kirti Chaudjary
     
+    Charlie Taylor
+    
 A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.git
 
 # Instructions
