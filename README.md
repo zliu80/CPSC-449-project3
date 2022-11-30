@@ -66,7 +66,8 @@ A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.
 
 As you can see, 1 user service, 3 game service.
 
-<img width="838" alt="image" src="https://user-images.githubusercontent.com/98377452/204710522-8b07b24c-1f3f-4e8c-bebb-224aef9c5d9c.png">
+<img width="537" alt="image" src="https://user-images.githubusercontent.com/98377452/204730140-335c443e-3ada-48af-9f12-4e7ef9ccbc4f.png">
+
 
 
 
