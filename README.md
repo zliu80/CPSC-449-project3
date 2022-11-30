@@ -1,14 +1,36 @@
-# CPSC-449-project2
+# CPSC-449-project3
 
     Add your name here
 
     Team Members:
 
     Zhiqiang Liu 
-    Sam Le
+    
     Kirti Chaudjary
-    Shridhar Bhardwaj
+    
+A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.git
 
+# Instructions
+
+    1. foreman start
+    
+    2. Don't do this step before "foreman start"
+    
+       cd CPSC449-project3/
+    
+       ./bin/init.sh
+
+       If the permission is denied. try:
+
+       sh ./bin/init.sh
+
+As you can see, 1 user service, 3 game service.
+
+<img width="838" alt="image" src="https://user-images.githubusercontent.com/98377452/204710522-8b07b24c-1f3f-4e8c-bebb-224aef9c5d9c.png">
+
+
+
+# Project 2 details
 
 # Initialize the database
 
