@@ -14,7 +14,7 @@ A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.
 
     1. After clone the project, create folders like this. Empty folder can't be pushed to github so that's why you need to create these empty folder manually.
     
-   <img width="182" alt="image" src="https://user-images.githubusercontent.com/98377452/204716534-afd44446-21c0-4fc7-913d-897a1c7ca332.png">
+<img width="182" alt="image" src="https://user-images.githubusercontent.com/98377452/204716534-afd44446-21c0-4fc7-913d-897a1c7ca332.png">
 
     2. foreman start
     
@@ -27,6 +27,42 @@ A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.
        If the permission is denied. try:
 
        sh ./bin/init.sh
+    4. Updating nginx
+    
+        upstream backend {
+                server localhost:5100;
+                server localhost:5200;
+                server localhost:5300;
+        }
+        server{
+                listen 80;
+                listen [::]:80;
+                server_name tuffix-vm;
+
+                location / {
+                        auth_request /auth;
+                        auth_request_set $auth_cookie $upstream_http_set_cookie;
+                        auth_request_set $auth_status $upstream_status;
+                        proxy_pass http://backend;
+                }
+
+                location = /auth {
+                        internal;
+                        proxy_pass http://localhost:5000;
+                        proxy_pass_request_body off;
+                        proxy_set_header Content-Length "";
+                        proxy_set_header X-Original-URI $request_uri;
+                        proxy_set_header X-Original-Remote-Addr $remote_addr;
+                        proxy_set_header X-Original-Host $host;
+                }
+
+                location ~ ^/(register)$ {
+                        proxy_pass http://localhost:5000;
+                        proxy_set_header X-Original-URI $request_uri;
+                        proxy_set_header X-Original-Remote-Addr $remote_addr;
+                        proxy_set_header X-Original-Host $host;
+                }
+        }
 
 As you can see, 1 user service, 3 game service.
 
