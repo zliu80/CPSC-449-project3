@@ -1,18 +1,18 @@
-# CPSC-449-project2
+# CPSC-449-project3
 
     Add your name here
 
     Team Members:
 
     Zhiqiang Liu 
-    Sam Le
+    
     Kirti Chaudjary
-    Shridhar Bhardwaj
+    
 
 
 # Initialize the database
 
-cd CPSC449project2/
+cd CPSC449project3/
 
 Under the project directory, type:
 
