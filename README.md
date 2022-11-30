@@ -8,11 +8,31 @@
     
     Kirti Chaudjary
     
+A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.git
 
+# Instructions
+
+    1. foreman start
+    
+    2. cd CPSC449-project3/
+    
+       ./bin/init.sh
+
+       If the permission is denied. try:
+
+       sh ./bin/init.sh
+
+As you can see, 1 user service, 3 game service.
+
+<img width="838" alt="image" src="https://user-images.githubusercontent.com/98377452/204710522-8b07b24c-1f3f-4e8c-bebb-224aef9c5d9c.png">
+
+
+
+# Project 2 details
 
 # Initialize the database
 
-cd CPSC449project3/
+cd CPSC449project2/
 
 Under the project directory, type:
 
