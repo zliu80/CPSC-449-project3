@@ -12,9 +12,13 @@ A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.
 
 # Instructions
 
-    1. foreman start
+    1. After clone the project, create folders like this. Empty folder can't be pushed to github so that's why you need to create these empty folder manually.
     
-    2. Don't do this step before "foreman start"
+    <img width="182" alt="image" src="https://user-images.githubusercontent.com/98377452/204716534-afd44446-21c0-4fc7-913d-897a1c7ca332.png">
+
+    2. foreman start
+    
+    3. Don't do this step before "foreman start"
     
        cd CPSC449-project3/
     
