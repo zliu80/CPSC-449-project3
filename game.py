@@ -12,8 +12,10 @@ QuartSchema(app)
 # For testing in pycharm
 app.config.from_file(f"etc/game.toml", toml.load)
 #app.config.from_file(f"etc/{__name__}.toml", toml.load)
-DBService.db_url = app.config["DATABASES"]["URL"]
-DBService.db_path = app.config['DATABASES']["DB_PATH"]
+DBService.db_write_url = app.config["DATABASES"]["WRITE_URL"]
+DBService.db_read_url1 = app.config["DATABASES"]["READ_URL1"]
+DBService.db_read_url2 = app.config["DATABASES"]["READ_URL2"]
+
 gameService = GameService()
 
 
@@ -247,10 +249,6 @@ def conflict(e):
 
 if __name__ == '__main__':
     try:
-
-        if DBService.db_url is None or DBService.db_path is None:
-            print("The system initialization failed! Check the db address.")
-
         app.run(debug=True)
     except Exception as e:
         print(e)

@@ -1,13 +1,11 @@
 import dataclasses
-
+import sqlite3
+from sqlite3 import OperationalError
+import databases
 import quart
 from quart import Quart, request, render_template, abort, current_app
 import toml
 from quart_schema import QuartSchema, validate_request
-
-# from quart_schema import QuartSchema, RequestSchemaValidationError
-from service.UserServiceModule import UserService
-
 from service.DBServiceModule import DBService
 from view.User import User
 
@@ -16,15 +14,13 @@ app = Quart(__name__)
 
 QuartSchema(app)
 
-DBService.logger = app.logger
-
 # For testing in pycharm
 # app.config.from_file(f"etc/user.toml", toml.load)
 app.config.from_file(f"etc/{__name__}.toml", toml.load)
-DBService.db_url = app.config["DATABASES"]["URL"]
-DBService.db_path = app.config['DATABASES']["DB_PATH"]
 
-dbService = DBService()
+tag = "User [sql statement]: "
+
+db_url = app.config["DATABASES"]["URL"]
 
 # The authentification response type
 UNAUTHORIZED = {'WWW-Authenticate': 'Basic realm="Login Required"'}
@@ -40,9 +36,9 @@ UNAUTHORIZED = {'WWW-Authenticate': 'Basic realm="Login Required"'}
 
 @app.route('/auth')
 async def auth():
-    print(request)
+    
     auth = request.authorization
-    print(auth)
+    
     if auth is not None and auth.type == "basic":
         username = auth.username
         password = auth.password
@@ -105,7 +101,7 @@ async def find_user_by_name(name):
     # Insert sql statement
     sql = "select username, password from Users where username = '" + name + "'"
     app.logger.info(sql)
-    row = await dbService.execute_sql_one(sql)
+    row = await execute_sql_one(sql)
     # If ther user is not found, return ""
     if row is None:
         return None
@@ -123,14 +119,54 @@ async def register(name, password):
     else:
         # Insert sql statement
         sql = "insert into Users(username, password) Values('" + name + "', '" + password + "')"
-        return await dbService.insert(sql)
+        return await insert(sql)
 
 
 async def find_all_user():
     sql = 'select * from Users;'
     app.logger.info(sql)
-    return await dbService.execute_sql_all(sql)
+    return await execute_sql_all(sql)
 
+
+# ********************************** Public SQL statement **********************************
+
+async def open_connection():
+    # Get connection of database
+    db = databases.Database(db_url)
+    await db.connect()
+    return db
+    # return await aiosqlite.connect(db_path)
+
+# ********************************** Public execute statement **********************************
+# ********************************** Note: Return only one record **********************************
+
+async def execute_sql_all(sql):
+    db = await open_connection()
+    print(tag, sql)
+    return await db.fetch_all(sql)
+
+# ********************************** Public execute statement **********************************
+# ********************************** Note: Return only one record **********************************
+
+async def execute_sql_one(sql):
+    db = await open_connection()
+    print(tag, sql)
+    return await db.fetch_one(sql)
+
+# ********************************** Public insert statement **********************************
+# ********************************** Note: Return the id if success **********************************
+async def insert(sql):
+    db = await open_connection()
+    # print(tag, sql)
+    # Execute the sql statement
+    return await db.execute(sql)
+
+# ********************************** Public update statement **********************************
+# ********************************** Note: Return id **********************************
+async def update(sql, values):
+    db = await open_connection()
+    print(tag, sql)
+    return await db.execute(sql, values)
 
 # @app.errorhandler(RequestSchemaValidationError)
 def bad_request(e):
@@ -145,7 +181,7 @@ def conflict(e):
 if __name__ == '__main__':
     try:
         DBService.app = app
-        if DBService.db_url is None or DBService.db_path is None:
+        if DBService.db_url is None:
             print("The system initialization failed! Check the db address.")
 
         app.run(debug=True)
