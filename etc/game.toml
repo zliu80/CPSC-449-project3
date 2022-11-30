@@ -1,6 +1,6 @@
 [DATABASES]
-URL='sqlite+aiosqlite:///var/gamedb'
-DB_PATH = '///var/gamedb'
+URL='sqlite+aiosqlite:///var/primary/mount/gamedb'
+DB_PATH = '///var/primary/mount/gamedb'
 [GAME]
 MAX_GUESS = 6
 VALID_WORD_LENGTH = 5
