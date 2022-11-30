@@ -6,7 +6,7 @@
 
     Zhiqiang Liu 
     
-    Kirti Chaudjary
+    Kirti Chaudhary
     
     Charlie Taylor
     
