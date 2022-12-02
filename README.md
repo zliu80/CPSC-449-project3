@@ -126,6 +126,8 @@ API List (We are Project 2 Now):
 
 2. Top 10 scores
 
+    Accessing this api do not require authentification.
+
     http://tuffix-vm/rank
 
 # Example show
