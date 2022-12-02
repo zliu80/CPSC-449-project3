@@ -75,7 +75,7 @@ Copy from project2: see details at: https://github.com/zliu80/CPSC449project2.gi
 
 As you can see, 1 user service, 3 game service, and 1 leaderboard service.
 
-<img width="537" alt="image" src="https://user-images.githubusercontent.com/98377452/204730140-335c443e-3ada-48af-9f12-4e7ef9ccbc4f.png">
+<img width="616" alt="image" src="https://user-images.githubusercontent.com/98377452/205391291-fd25919d-c2b1-4376-b265-f515dc621d47.png">
 
 # User API
 
