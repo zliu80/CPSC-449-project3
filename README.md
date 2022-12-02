@@ -10,7 +10,7 @@
     
     Charlie Taylor
     
-A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.git
+Copy from project2: see details at: https://github.com/zliu80/CPSC449project2.git
 
 # Instructions
 
@@ -77,107 +77,6 @@ As you can see, 1 user service, 3 game service, and 1 leaderboard service.
 
 <img width="537" alt="image" src="https://user-images.githubusercontent.com/98377452/204730140-335c443e-3ada-48af-9f12-4e7ef9ccbc4f.png">
 
-
-
-
-# Project 2 details
-
-# Initialize the database
-
-cd CPSC449project2/
-
-Under the project directory, type:
-
-./bin/init.sh
-
-If the permission is denied. try:
-
-sh ./bin/init.sh
-
-# Split into two services.
-
-user.py is for User Service, database userdb file in var/primary/mount/
-
-game.py is for Game Service, database gamedb file in var/primary/mount/
-
-# Instructions
-
-Before you start, you should note that our Auth service is running on localhost:5000, Game service is running on localhost:5100. After setup, the Nginx server will not let you to visit the Game service unless you pass the Auth.
-
-1. Set up the nginx server
-
-        cd /etc/nginx/sites-enabled
-    
-        sudo vim tutorial
-
-2. Updating the tutorial file, see tutorial-user-authentification, this file is under the root.
-
-Notice here the PORT number for service are hardcoded in nginx config
-```
-user service: 5000
-game service: 5100, 5101, 5103, the port number incrementation is 1 each time which is the way foreman works
-
-upstream backend {
-        server localhost:5100; // We only do 3 here
-        server localhost:5101;
-        server localhost:5102;
-}
-```
-
-*** Copy pasting this for nginx could potentially cause strange issue where nginx will not working properly such as throwing 500 server error even when nginx starts up ok. Restarting might not help. 
-
-What we recommend you do is go back to the default nginx, restart to make sure it works. Then copy paste block by block starting at the most basic nginx config, restart and make sure it works. Then restart nginx and copy another block and so on. Sometimes, when copying over material the result may contain strange invisible white spaces character that you may not notice which might result in those issues.
-
-```       
-        upstream backend {
-                server localhost:5100;
-                server localhost:5101;
-                server localhost:5102;
-        }
-        server{
-                listen 80;
-                listen [::]:80;
-                server_name tuffix-vm;
-
-                location / {
-                        auth_request /auth;
-                        auth_request_set $auth_cookie $upstream_http_set_cookie;
-                        auth_request_set $auth_status $upstream_status;
-                        proxy_pass http://backend;
-                }
-
-                location = /auth {
-                        internal;
-                        proxy_pass http://localhost:5000;
-                        proxy_pass_request_body off;
-                        proxy_set_header Content-Length "";
-                        proxy_set_header X-Original-URI $request_uri;
-                        proxy_set_header X-Original-Remote-Addr $remote_addr;
-                        proxy_set_header X-Original-Host $host;
-                }
-
-                location ~ ^/(register)$ {
-                        proxy_pass http://localhost:5000;
-                        proxy_set_header X-Original-URI $request_uri;
-                        proxy_set_header X-Original-Remote-Addr $remote_addr;
-                        proxy_set_header X-Original-Host $host;
-                }
-                
-
-        }
-```
-3. After updating tutorial, restart nginx
-
-        sudo service nginx restart
-    
-4. Start User (port: 5000), Game (port: 5100, 5200, 5300), Leaderboard(port:5400) Service.
-
-        foreman start 
-    
-visit http://tuffix-vm, you will see the authentification dialog if you have not logged in.
-
-<img width="1223" alt="image" src="https://user-images.githubusercontent.com/98377452/200998703-dbe7bab7-2e57-4200-8a45-55154ff4e5c7.png">
-
 # User API
 
 There are only two API. 1). auth 2). register
@@ -202,45 +101,32 @@ Note:
 API List (We are Project 2 Now):
 
 1.  Start a new game
-    
-Project 2: 
 
     http://tuffix-vm/startgame
 
-Project 1: 
-
-    http://localhost:5000/startgame?username=jacob
-
 2. Guess a word
-
-Project 2: 
 
     http://tuffix-vm/guess?game_id=1&word=guess
 
-Project 1: 
-
-    http://localhost:5000/guess?username=jacob&game_id=1&word=mixed
-
 3. List all game of the current user
-
-Project 2: 
 
     http://tuffix-vm/allgame
 
-Project 1: 
-
-    http://localhost:5000/allgame?username=jacob
-
 4. Retrieve a game with the game_id
 
-Project 2: 
-
     http://tuffix-vm/retrievegame?game_id=1
+   
+# Leaderboard API
 
-Project 1: 
+1. Post all scores (win or lose)
 
-    http://localhost:5000/retrievegame?game_id=1
+    Note: Reporting results is accessible only to internal services, you won't be able to access through API gateway.
 
+    http://127.0.0.1:5400/post
+
+2. Top 10 scores
+
+    http://tuffix-vm/rank
 
 # Example show
 
