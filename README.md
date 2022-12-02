@@ -64,9 +64,16 @@ A copy from project2: see details at: https://github.com/zliu80/CPSC449project2.
                         proxy_set_header X-Original-Remote-Addr $remote_addr;
                         proxy_set_header X-Original-Host $host;
                 }
+                
+                location ~ ^/(rank)$ {
+                        proxy_pass http://localhost:5400;
+                        proxy_set_header X-Original-URI $request_uri;
+                        proxy_set_header X-Original-Remote-Addr $remote_addr;
+                        proxy_set_header X-Original-Host $host;
+                }
         }
 
-As you can see, 1 user service, 3 game service.
+As you can see, 1 user service, 3 game service, and 1 leaderboard service.
 
 <img width="537" alt="image" src="https://user-images.githubusercontent.com/98377452/204730140-335c443e-3ada-48af-9f12-4e7ef9ccbc4f.png">
 
@@ -155,15 +162,17 @@ What we recommend you do is go back to the default nginx, restart to make sure i
                         proxy_set_header X-Original-Remote-Addr $remote_addr;
                         proxy_set_header X-Original-Host $host;
                 }
+                
+
         }
 ```
 3. After updating tutorial, restart nginx
 
         sudo service nginx restart
     
-4. Start User (port: 5000) and Game (port: 5100, 5101, 5102) Service.
+4. Start User (port: 5000), Game (port: 5100, 5200, 5300), Leaderboard(port:5400) Service.
 
-        foreman start --formation user=1,game=3 --port 5000 
+        foreman start 
     
 visit http://tuffix-vm, you will see the authentification dialog if you have not logged in.
 
