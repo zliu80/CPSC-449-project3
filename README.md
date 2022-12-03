@@ -29,7 +29,8 @@ Copy from project2: see details at: https://github.com/zliu80/CPSC449project2.gi
        If the permission is denied. try:
 
        sh ./bin/init.sh
-    4. Updating nginx
+       
+    4. Updating nginx (see the file "tutorial-user-authentification" at the root folder)
     
         upstream backend {
                 server localhost:5100;
