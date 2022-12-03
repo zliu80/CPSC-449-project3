@@ -11,15 +11,17 @@ QuartSchema(app)
 
 # For testing in pycharm
 app.config.from_file(f"etc/game.toml", toml.load)
-#app.config.from_file(f"etc/{__name__}.toml", toml.load)
+# app.config.from_file(f"etc/{__name__}.toml", toml.load)
+
+# the insert/update/delete statement must be in the primary database
 DBService.db_write_url = app.config["DATABASES"]["WRITE_URL"]
-DBService.db_read_url1 = app.config["DATABASES"]["READ_URL1"]
-DBService.db_read_url2 = app.config["DATABASES"]["READ_URL2"]
 
+# the select statement can be in primary/secondary/secondary2 databases
+DBService.db_urls = [app.config["DATABASES"]["WRITE_URL"], app.config["DATABASES"]["READ_URL1"],
+                     app.config["DATABASES"]["READ_URL2"]]
+
+# Initialize game service
 gameService = GameService()
-
-
-
 
 
 # **************************************************************#
@@ -30,10 +32,12 @@ gameService = GameService()
 async def index():
     username = ""
     if request.authorization is not None:
-    	    username = request.authorization.username   
-    return {"authentificated user":username, "msg": "Welcome to the Wordle game. To play the game, you may visit http://tuffix-vm/docs to see the API, or see README.md"}
-    
-    
+        username = request.authorization.username
+    return {"authenticated user": username,
+            "msg": "Welcome to the Wordle game. To play the game, you may visit http://tuffix-vm/docs to see the API, "
+                   "or see README.md"}
+
+
 @app.route('/startgame')
 async def start_new_game():
     msg = ""
@@ -41,10 +45,10 @@ async def start_new_game():
     username = None
     try:
         # Get the username from client
-        
-        #username = request.args.get('username')
+
+        # username = request.args.get('username')
         if request.authorization is not None:
-    	    username = request.authorization.username  
+            username = request.authorization.username
         elif username is None:
             return {"msg": "To start a new game, the username must be provided."}
 
@@ -54,8 +58,6 @@ async def start_new_game():
         # user = await userService.find_user_by_name(username)
         # if user is None:
         #     return {"msg:" "The username you provided cannot be found."}
-
-
 
         game = Game(0, 0, app.config["GAME"]["MAX_GUESS"], 0, username, 0)
         # Call service module to start a new game
@@ -92,11 +94,11 @@ def word_analysis(word, correct_word):
 async def guess():
     msg = ""
     words_analysis_list = None
-    #username = request.args.get('username')
+    # username = request.args.get('username')
     username = None
     if request.authorization is not None:
-    	    username = request.authorization.username  
-    
+        username = request.authorization.username
+
     game_id = request.args.get("game_id")
     word = request.args.get('word')
     if username is None:
@@ -179,9 +181,9 @@ async def allGame():
     listGame = []
     username = None
     try:
-        #username = request.args.get('username')
+        # username = request.args.get('username')
         if request.authorization is not None:
-    	    username = request.authorization.username  
+            username = request.authorization.username
         if username is None:
             return {"msg": "Require an username to do this search."}
 
