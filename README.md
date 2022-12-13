@@ -1,14 +1,17 @@
-# CPSC-449-project3
+# CPSC-449-project4
 
     Add your name here
 
     Team Members:
 
-    Zhiqiang Liu 
+    Alejandro Ramos Jr
     
     Kirti Chaudhary
     
-    Charlie Taylor
+    Anusha Hadagali
+    
+ Copy from project3: see details at: https://github.com/zliu80/CPSC-449-project3
+    
     
 Copy from project2: see details at: https://github.com/zliu80/CPSC449project2.git
 
