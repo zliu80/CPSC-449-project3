@@ -81,6 +81,26 @@ As you can see, 1 user service, 3 game service, and 1 leaderboard service.
 
 <img width="616" alt="image" src="https://user-images.githubusercontent.com/98377452/205391291-fd25919d-c2b1-4376-b265-f515dc621d47.png">
 
+# Cron RQ Updates
+Terminal:
+
+mkdir ~/scripts
+
+cd ~/.scripts
+
+touch updates.sh
+
+chmod u+x ./updates.sh
+
+crontab -e
+
+# In the cron tab insert:
+
+*/10 * * * * rq requeue --all --queue default
+
+<img width="572" alt="Screenshot 2022-12-17 at 5 30 22 PM" src="https://user-images.githubusercontent.com/92772530/208272706-f4037a43-a569-43d7-8de2-1db903ebcc53.png">
+
+
 # User API
 
 There are only two API. 1). auth 2). register
