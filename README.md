@@ -82,6 +82,8 @@ As you can see, 1 user service, 3 game service, and 1 leaderboard service.
 <img width="616" alt="image" src="https://user-images.githubusercontent.com/98377452/205391291-fd25919d-c2b1-4376-b265-f515dc621d47.png">
 
 # Cron RQ Updates
+Download Cron on terminal
+
 Terminal:
 
 mkdir ~/scripts
