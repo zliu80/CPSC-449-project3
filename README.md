@@ -206,4 +206,4 @@ Load balancing: game service getting accessed in Round Robin fashion
 * Downloaded and installed ngrok to expose a port in the local development environment to the Internet.
 * Added a Webhook to the Games service, allowing clients to receive updates when a user wins or loses a game.
 * clients will need to register with the Games service, providing a callback URL where win/loss information should be sent.
-* Add a new endpoint to the Games service allowing clients to register URLs to receive scores. 
+* Added a new endpoint to the Games service allowing clients to register URLs to receive scores. 
