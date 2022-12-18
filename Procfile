@@ -4,3 +4,4 @@ game2: bin/litefs -config etc/secondary.yml
 game3: bin/litefs -config etc/secondary2.yml
 leaderboard: hypercorn leaderboard --reload --debug --bind leaderboard.local.gd:$PORT --access-logfile - --error-logfile - --log-level DEBUG
 queue: rq worker --with-scheduler --verbose
+webhook: hypercorn game --reload --debug --bind webhook.local.gd:$PORT --access-logfile - --error-logfile - --log-level DEBUG
