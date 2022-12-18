@@ -4,7 +4,9 @@ from quart_schema import QuartSchema, RequestSchemaValidationError, validate_req
 from service.GameServiceModule import GameService
 from view.Game import Game
 from service.DBServiceModule import DBService
-
+from redis import Redis
+from rq import Queue
+import httpx
 # ************** Initialized variable **************#
 app = Quart(__name__)
 QuartSchema(app)
@@ -92,6 +94,11 @@ def word_analysis(word, correct_word):
 
 @app.route('/guess')
 async def guess():
+
+    # reddis conn
+    reddis_conn = Redis()
+    q = Queue(connection=reddis_conn)
+
     msg = ""
     words_analysis_list = None
     # username = request.args.get('username')
@@ -152,12 +159,21 @@ async def guess():
                 if game.secret_word_id == guessword_id:
                     game.status = 1
                     msg = "Wowwwwwww! You won. The word you guessed is a secret word!"
+
+                    gameResult = []
+                    gameResult[0] = username
+                    gameResult[1] = game.number_guesses
+
                 else:
                     remaining_time = game.max_guess - guess_time - 1
                     secret_word = await gameService.find_word_name_by_id(game.secret_word_id)
                     if remaining_time == 0:
                         game.status = 2
                         msg = "Oops! You lost. You've used up all your guesses. The secret word is " + secret_word
+
+                        gameResult = []
+                        gameResult[0] = username
+                        gameResult[1] = game.number_guesses
                     else:
                         msg = "Valid word, but not a secret word, you have " + str(remaining_time) + " times remaining."
 
@@ -174,6 +190,7 @@ async def guess():
     if words_analysis_list is not None and len(words_analysis_list) > 0:
         return {"msg": msg, "word_you_guess": word, "words_analysis": words_analysis_list}
     return {"msg": msg, "word_you_guess": word}
+
 
 
 @app.route("/allgame")
