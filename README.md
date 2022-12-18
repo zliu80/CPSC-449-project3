@@ -102,6 +102,13 @@ crontab -e
 
 <img width="572" alt="Screenshot 2022-12-17 at 5 30 22 PM" src="https://user-images.githubusercontent.com/92772530/208272706-f4037a43-a569-43d7-8de2-1db903ebcc53.png">
 
+# Webhook Configuration
+
+* Downloaded and installed ngrok to expose a port in the local development environment to the Internet.
+* Added a Webhook to the Games service, allowing clients to receive updates when a user wins or loses a game.
+* clients will need to register with the Games service, providing a callback URL where win/loss information should be sent.
+* Added a new endpoint to the Games service allowing clients to register URLs to receive scores. 
+
 
 # User API
 
@@ -201,9 +208,3 @@ Use the game_id from the above image
 Load balancing: game service getting accessed in Round Robin fashion
 ![image](https://user-images.githubusercontent.com/67793141/202825231-2199edce-3ffb-4718-9d1a-5c39c38c696f.png)
 
-# Webhook Configuration
-
-* Downloaded and installed ngrok to expose a port in the local development environment to the Internet.
-* Added a Webhook to the Games service, allowing clients to receive updates when a user wins or loses a game.
-* clients will need to register with the Games service, providing a callback URL where win/loss information should be sent.
-* Added a new endpoint to the Games service allowing clients to register URLs to receive scores. 
